@@ -33,7 +33,7 @@ Os trens criados se comportam da seguinte maneira (`trem_produtor`):
 
 1. Cada trem criado demora um tempo para carregar na mina;
 2. Após carregar, o trem pede acesso ao recurso compartilhado (trilho único) usando a função `.acquire()`;
-3. O tempo de travessia pelo trilho único é mantido fixo em $3,2\mathrm{s}$;
+3. O tempo de travessia pelo trilho único é mantido fixo em $3{,}2\,\mathrm{s}$;
 4. O trem então tenta descarregar no pátio. Caso o pátio estiver cheio, ocorre o *deadlock*;
 5. O buffer é atualizado, incrementando 1;
 6. O trilho único é liberado pela função `.release()`.
@@ -42,6 +42,21 @@ No descarregamento (`agente_descarregador`), o seguinte acontece:
 
 1. Variável auxiliar `total_no_patio` conta a quantidade de trens no pátio de descarregamento;
 2. De forma assíncrona, a função remove trens do pátio e avisa em mensagem.
+
+#### **> Semáforos**
+
+- `vagas_patio` atua como um semáforo que conta as vagas disponíveis por trens no pátio. Começando em 2 (definido pela variável `CAPACIDADE_PATIO`), decresce por uma unidade a cada trem que chega no pátio para realizar o descarregamento;
+- `trilho_compatilhado` determina se o trilho compartilhado está livre (1) ou não (0);
+
+#### **> Fluxo de threads**
+
+|Sequência|Thread|Função|
+|---|---            |---|
+|1|Carregamento     |Espera um tempo aleatório, simulando carregamento do trem na mina.|
+|2|Acesso ao trilho |Execução de `trilho_compartilhado.acquire()`. Caso o trilho estiver livre, o trem prossegue, caso contrário ele espera.|
+|3|Travessia        |Passagem do trem pelo trilho compartilhado, o que demora um tempo fixo de $3{,}2\,\mathrm{s}$.|
+|4|Entrada no pátio |Esse é o ponto crítico, onde um *deadlock* pode ocorrer. O trem terminou de atravessar o trilho compartilhado e está entrando no pátio.|
+|5|Descarregamento  |Se houver vaga no pátio, o trem entra, caso contrário ele espera. Quando no pátio, o trem descarrega e libera sua vaga chamando `trilho_compartilhado.release()`|
 
 #### **> Deadlock**
 

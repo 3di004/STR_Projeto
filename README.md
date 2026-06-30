@@ -15,6 +15,14 @@
 
 Levando-se em consideração o tema "concorrência e sincronização em sistemas operacionais", a ideia do projeto é a implementação de um sistema de controle de tráfego ferroviário, onde os trens concorrem pela passagem por uma convergência nos trilhos. São múltiplos trens vindos de minas operando em três linhas que convergem para um trilho compartilhado, a zona crítica do sistema, chegando no pátio para descarregar.
 
+### **> Objetivos**
+
+- Coordenar o acesso exclusivo ao trilho único;
+- Garantir a sinalização correta;
+  - Prevenir colisões;
+  - Prevenir bloqueios;
+- Prevenir violações de segurança;
+
 ### **> Funcionamento do código**
 
 As características do sistema são as seguintes:
@@ -72,10 +80,3 @@ B --> E[Pátio]
 
 Um deadlock trata de um impasse na execução onde o sistema trava e não consegue se recuperar. No sistema desenvolvido neste projeto, o deadlock acontece quando o pátio está cheio e um terceiro trem decide entrar no trilho compartilhado. Quando a travessia é concluída, o trem não consegue acessar o pátio e permanece no trilho compartilhado, bloqueando-o.
 
-## **Objetivos**
-
-- Coordenar o acesso exclusivo ao trilho único;
-- Garantir a sinalização correta;
-  - Prevenir colisões;
-  - Prevenir bloqueios;
-- Prevenir violações de segurança;

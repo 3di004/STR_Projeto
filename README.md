@@ -47,6 +47,10 @@ No descarregamento (`agente_descarregador`), o seguinte acontece:
 1. Variável auxiliar `total_no_patio` conta a quantidade de trens no pátio de descarregamento;
 2. De forma assíncrona, a função remove trens do pátio e avisa em mensagem.
 
+### > Deadlock
+
+
+
 ## Objetivos
 
 - Coordenar o acesso exclusivo ao trilho único;

@@ -58,6 +58,16 @@ No descarregamento (`agente_descarregador`), o seguinte acontece:
 |4|Entrada no pátio |Esse é o ponto crítico, onde um *deadlock* pode ocorrer. O trem terminou de atravessar o trilho compartilhado e está entrando no pátio.|
 |5|Descarregamento  |Se houver vaga no pátio, o trem entra, caso contrário ele espera. Quando no pátio, o trem descarrega e libera sua vaga chamando `trilho_compartilhado.release()`|
 
+No diagrama a seguir, o funcionamento sequencial do sistema toma forma de blocos. Os três trens trafegam por seus trilhos individuais até que convergem a um trilho compartilhado antes de chegar ao pátio de descarregamento. O controle acontece quando um trem entra no trilho compartilhado, bloqueando acesso aos demais trens, e quando dois estão no pátio ocupando todo o espaço disponível.
+
+```mermaid
+graph TD;
+A[Trem 1] -- Trilho 1 --> B[Trilho Compartilhado];
+C[Trem 2] -- Trilho 2 --> B;
+D[Trem 3] -- Trilho 3 --> B;
+B --> E[Pátio]
+```
+
 #### **> Deadlock**
 
 Um deadlock trata de um impasse na execução onde o sistema trava e não consegue se recuperar. No sistema desenvolvido neste projeto, o deadlock acontece quando o pátio está cheio e um terceiro trem decide entrar no trilho compartilhado. Quando a travessia é concluída, o trem não consegue acessar o pátio e permanece no trilho compartilhado, bloqueando-o.

@@ -15,6 +15,16 @@
 
 Levando-se em consideração o tema "concorrência e sincronização em sistemas operacionais", a ideia do projeto é a implementação de um sistema de controle de tráfego ferroviário, onde os trens concorrem pela passagem por uma convergência nos trilhos. São múltiplos trens vindos de minas operando em três linhas que convergem para um trilho compartilhado, a zona crítica do sistema, chegando no pátio para descarregar.
 
+No diagrama a seguir, o funcionamento sequencial do sistema toma forma de blocos. Os três trens trafegam por seus trilhos individuais até que convergem a um trilho compartilhado antes de chegar ao pátio de descarregamento. O controle acontece quando um trem entra no trilho compartilhado, bloqueando acesso aos demais trens, e quando dois estão no pátio ocupando todo o espaço disponível.
+
+```mermaid
+graph TD;
+A[Trem 1] -- Trilho 1 --> B[Trilho Compartilhado];
+C[Trem 2] -- Trilho 2 --> B;
+D[Trem 3] -- Trilho 3 --> B;
+B --> E[Pátio]
+```
+
 ### **> Objetivos**
 
 - Coordenar o acesso exclusivo ao trilho único;
@@ -65,16 +75,6 @@ No descarregamento (`agente_descarregador`), o seguinte acontece:
 |3|Travessia        |Passagem do trem pelo trilho compartilhado, o que demora um tempo fixo de $3.2\mathrm{s}$.|
 |4|Entrada no pátio |Esse é o ponto crítico, onde um *deadlock* pode ocorrer. O trem terminou de atravessar o trilho compartilhado e está entrando no pátio.|
 |5|Descarregamento  |Se houver vaga no pátio, o trem entra, caso contrário ele espera. Quando no pátio, o trem descarrega e libera sua vaga chamando `trilho_compartilhado.release()`|
-
-No diagrama a seguir, o funcionamento sequencial do sistema toma forma de blocos. Os três trens trafegam por seus trilhos individuais até que convergem a um trilho compartilhado antes de chegar ao pátio de descarregamento. O controle acontece quando um trem entra no trilho compartilhado, bloqueando acesso aos demais trens, e quando dois estão no pátio ocupando todo o espaço disponível.
-
-```mermaid
-graph TD;
-A[Trem 1] -- Trilho 1 --> B[Trilho Compartilhado];
-C[Trem 2] -- Trilho 2 --> B;
-D[Trem 3] -- Trilho 3 --> B;
-B --> E[Pátio]
-```
 
 #### **> Deadlock**
 

@@ -7,6 +7,10 @@
 > - Edileudo da Silva Guedes Filho
 > - José Vanilson de Brito Júnior
 
+## **Vídeo demonstrativo de funcionamento**
+
+YouTube: <https://youtu.be/oPYf1kHDYA8>
+
 ## **Descrição**
 
 > **Linguagem usada**: Python
